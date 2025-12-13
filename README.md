@@ -6,4 +6,4 @@
 
 • Interfeys skrinshotlari: ![rasm](./public/image.png)
 
-• Demo havolasi :
+• Demo havolasi : [havola](https://mini-marketplace-rosy.vercel.app/)
