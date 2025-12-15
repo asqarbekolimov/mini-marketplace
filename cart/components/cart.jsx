@@ -8,7 +8,7 @@ function Cart() {
   const selectedProduct = (e) => {
     const product = e.detail;
 
-    setProducts((state) => {
+    const newProduct = (state) => {
       const found = state.find((item) => item.id === product.id);
 
       if (found) {
@@ -18,9 +18,10 @@ function Cart() {
             : item
         );
       }
-
       return [...state, { ...product, quantity: 1 }];
-    });
+    };
+
+    setProducts((prev) => newProduct(prev));
   };
 
   useEffect(() => {
@@ -41,27 +42,27 @@ function Cart() {
   };
 
   const addQuantity = (id) => {
-    setProducts(
-      products.map((product) => {
-        if (product.id === id) {
-          return { ...product, quantity: product.quantity + 1 };
-        }
-        return product;
-      })
-    );
+    const newProducts = products.map((product) => {
+      if (product.id === id) {
+        return { ...product, quantity: product.quantity + 1 };
+      }
+      return product;
+    });
+
+    setProducts(newProducts);
   };
   const removeQuantity = (id) => {
-    setProducts(
-      products.map((product) => {
-        if (product.id === id) {
-          if (product.quantity === 1) {
-            return product;
-          }
-          return { ...product, quantity: product.quantity - 1 };
+    const newProducts = products.map((product) => {
+      if (product.id === id) {
+        if (product.quantity === 1) {
+          return product;
         }
-        return product;
-      })
-    );
+        return { ...product, quantity: product.quantity - 1 };
+      }
+      return product;
+    });
+
+    setProducts(newProducts);
   };
 
   return (
