@@ -36,7 +36,7 @@ function Cart() {
     }
   }, [products]);
 
-  const removeItem = (id) => {
+  const removeProduct = (id) => {
     setProducts(products.filter((product) => product.id !== id));
   };
 
@@ -68,7 +68,7 @@ function Cart() {
     <>
       <CarList
         products={products}
-        onRemove={removeItem}
+        onRemove={removeProduct}
         onAddQuantity={addQuantity}
         onRemoveQuantity={removeQuantity}
       />
