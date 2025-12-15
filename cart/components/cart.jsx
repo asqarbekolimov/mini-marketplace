@@ -2,30 +2,28 @@ import { useEffect, useState } from "react";
 import CarList from "./cart-list";
 
 function Cart() {
-  const [products, setProducts] = useState(() => {
-    const saved = localStorage.getItem("cart");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const saved = localStorage.getItem("cart");
+  const [products, setProducts] = useState(saved ? JSON.parse(saved) : []);
+
+  const selectedProduct = (e) => {
+    const product = e.detail;
+
+    setProducts((state) => {
+      const found = state.find((item) => item.id === product.id);
+
+      if (found) {
+        return state.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+
+      return [...state, { ...product, quantity: 1 }];
+    });
+  };
 
   useEffect(() => {
-    const selectedProduct = (e) => {
-      const product = e.detail;
-
-      setProducts((state) => {
-        const found = state.find((item) => item.id === product.id);
-
-        if (found) {
-          return state.map((item) =>
-            item.id === product.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
-          );
-        }
-
-        return [...state, { ...product, quantity: 1 }];
-      });
-    };
-
     window.addEventListener("add-to-cart", selectedProduct);
     return () => window.removeEventListener("add-to-cart", selectedProduct);
   }, []);
